@@ -5,13 +5,12 @@ const socketIo = require('socket.io');
 const mediasoup = require('mediasoup');
 const cors = require('cors');
 
-// Paths to your self-signed certificate and key
-const certPath = 'C:/Users/rodri/cert.pem';
-const keyPath = 'C:/Users/rodri/key.pem';
+// Path to your combined certificate and key
+const certPath = 'C:/Users/rodri/combined.pem';
 
 const app = express();
 const server = https.createServer({
-    key: fs.readFileSync(keyPath),
+    key: fs.readFileSync(certPath),
     cert: fs.readFileSync(certPath),
 }, app);
 const io = socketIo(server, {
@@ -42,11 +41,11 @@ let worker, router;
 app.use(express.static('public'));
 
 app.get('/sender', (req, res) => {
-    res.sendFile(__dirname + '/public/sender.html');
+    res.sendFile(__dirname + '/sender.html');
 });
 
 app.get('/receiver', (req, res) => {
-    res.sendFile(__dirname + '/public/receiver.html');
+    res.sendFile(__dirname + '/receiver.html');
 });
 
 io.on('connection', (socket) => {

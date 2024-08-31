@@ -4,6 +4,7 @@ let transport;
 let producer;
 const videoElement = document.getElementById('videoElement');
 const startSharingButton = document.getElementById('startSharing');
+const stopSharingButton = document.getElementById('stopSharing');
 
 startSharingButton.addEventListener('click', async () => {
     const stream = await navigator.mediaDevices.getDisplayMedia({ video: true });
@@ -25,6 +26,14 @@ startSharingButton.addEventListener('click', async () => {
 
     startSharingButton.style.display = 'none';
     stopSharingButton.style.display = 'block';
+});
+
+stopSharingButton.addEventListener('click', async () => {
+    socket.emit('stop-share', { producerId: producer.id });
+    producer.close();
+    transport.close();
+    startSharingButton.style.display = 'block';
+    stopSharingButton.style.display = 'none';
 });
 
 async function fetchTransportDetails() {

@@ -18,7 +18,7 @@ socket.on('newProducer', async ({ producerId, kind }) => {
 
     socket.emit('consume', {
         producerId,
-        rtpCapabilities: transport.rtpCapabilities,
+        rtpCapabilities: transport.rtpCapabilities,a
     });
 
     socket.on('consumed', async ({ id, producerId, kind, rtpParameters }) => {
